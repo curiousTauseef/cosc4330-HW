@@ -1,4 +1,3 @@
-#Programming Assingment 1 - Sample Input
 10
 3
 customer_1:

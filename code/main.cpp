@@ -1,11 +1,16 @@
 #include<stdio.h>
+#include<unistd.h>
 #include<errno.h>
 #include<sys/types.h>
 #include<sys/ipc.h>
 #include<sys/sem.h>
+#include<sys/wait.h>
 #include<stdlib.h>
-int mysem;
+#include"ActionParser.h"
 #define KEY 1195965
+
+int mysem;
+
 
 int get_sem(int i){
 	short semarr[30];
@@ -35,6 +40,8 @@ void create_sem(int N){
 		printf("Error in create semaphore \n");
 		exit(0);
 	}
+	else
+		printf("Create %d semaphores success!!!!\n", N);
 }
 
 void init_sem(int N){
@@ -87,9 +94,14 @@ void V(int i)
 
 
 int main(int argc, char * argv[]){
+
+	//1. parse the input file, and save actions of the customers.
+	actionParser(argv[1]);
+
+
 	int RoomNUmebr = 10;
 	//some problem here, should try pon real linux mechine
-	//create_sem(RoomNUmebr);
+	create_sem(RoomNUmebr);
 	//
 	//Step 1:read the action file input herer!!!
 	
@@ -105,7 +117,7 @@ int main(int argc, char * argv[]){
 			exit(1);
 		}
 		if(pid == 0){
-			custom_id = pid;
+			custom_id = i;
 			break;
 		}
 	}
@@ -117,16 +129,12 @@ int main(int argc, char * argv[]){
 
 	else{
 		for(int custom_index = 0; custom_index <custom_num; ++custom_index)
-			if(custom_index = custom_id)
+			if(custom_index == custom_id)
 			{
 				//do some thing in the input file
+				printf("this is process id %d\n", custom_id);
 			}
-	
 	}
-
-
-
-
 
 	return 0;
 }
