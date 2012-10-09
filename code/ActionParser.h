@@ -42,9 +42,11 @@ bool actionParser(char * filename){
 		exit(0);
 	}
 
-
 	//parse all actions
-	while(0){
+	while(1){
+
+
+
 	};
 	return false;
 }
